@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 const Hero = () => {
   return (
     <>
-      <div className="relative bg-white pb-[110px] pt-[70px] dark:bg-dark lg:pt-[70px] min-w-full flex justify-center">
+      <div className="relative -z-10 bg-white pb-[110px] pt-[70px] dark:bg-dark lg:pt-[70px] min-w-full flex justify-center">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 lg:w-5/12">
