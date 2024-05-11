@@ -14,7 +14,7 @@ export default function Layout({
         <MegaMenu />
       </div>
 
-      <div className="mt-[150px] -z-10">{children}</div>
+      <div className="mt-[200px] -z-10">{children}</div>
     </div>
   );
 }

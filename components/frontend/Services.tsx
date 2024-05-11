@@ -1,5 +1,6 @@
 import React from "react";
 import { TabbedItems } from "./TabbedItems";
+import SectionHeading from "../SectionHeading";
 
 export type ServiceCardProps = {
   icon: React.ReactNode;
@@ -14,9 +15,8 @@ const Services = () => {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
             <div className="mx-auto mb-12  lg:mb-20">
-              <h2 className="mb-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]">
-                Top-rated online doctors & specialists available now.
-              </h2>
+              <SectionHeading title="Top-rated online doctors & specialists available now." />
+
               <p className="text-base text-body-color dark:text-dark-6">
                 Choose from thousands of providers at every day affordable
                 prices. Book online today.
