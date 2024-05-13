@@ -60,7 +60,7 @@ export default function Navbar() {
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a
-            href="#"
+            href="/login"
             className="text-sm font-semibold leading-6 text-gray-50 bg-blue-800 py-3 px-6 rounded-lg"
           >
             Log in
@@ -127,7 +127,7 @@ export default function Navbar() {
               </div>
               <div className="py-6">
                 <a
-                  href="#"
+                  href="/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:bg-blue-700 text-gray-50 bg-blue-800 "
                 >
                   Log in

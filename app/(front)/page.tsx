@@ -5,7 +5,7 @@ import Services from "@/components/frontend/Services";
 
 export default function Home() {
   return (
-    <section className="flex justify-center flex-col">
+    <section className="flex justify-center flex-col mt-[200px]">
       <Hero />
       <Brands />
       <Services />
