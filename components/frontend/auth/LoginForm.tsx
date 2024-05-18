@@ -6,9 +6,17 @@ import SubmitButton from "../formInputs/SubmitButton";
 import { LoginInputProps } from "@/types";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { Alert } from "flowbite-react";
+import { HiInformationCircle } from "react-icons/hi";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  const router = useRouter();
 
   const {
     register,
@@ -18,7 +26,31 @@ export default function LoginForm() {
   } = useForm<LoginInputProps>();
 
   async function onSubmit(data: LoginInputProps) {
-    console.log(data);
+    try {
+      setIsLoading(true);
+      console.log("Attempting to sign in with credentials:", data);
+      const loginData = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+      console.log("SignIn response:", loginData);
+      if (loginData?.error) {
+        setIsLoading(false);
+        toast.error("Sign-in error: Check your credentials");
+        setShowNotification(true);
+      } else {
+        // Sign-in was successful
+        setShowNotification(false);
+        reset();
+        setIsLoading(false);
+        toast.success("Login Successful");
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Network Error:", error);
+      toast.error("Its seems something is wrong with your Network");
+    }
   }
 
   return (
@@ -30,7 +62,18 @@ export default function LoginForm() {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          {showNotification && (
+            <Alert
+              color="failure"
+              icon={HiInformationCircle}
+              className=" bg-rose-200 text-rose-700"
+            >
+              <span className="font-medium">Sign-in error!</span> Please Check
+              your credentials
+            </Alert>
+          )}
+
           <TextInput
             label="Email"
             register={register}
