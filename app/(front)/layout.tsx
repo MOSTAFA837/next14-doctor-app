@@ -1,3 +1,4 @@
+import Footer from "@/components/frontend/Footer";
 import Navbar from "@/components/frontend/Navbar";
 import MegaMenu from "@/components/frontend/NavigationMenu";
 
@@ -14,7 +15,9 @@ export default function Layout({
         <MegaMenu />
       </div>
 
-      <div className="mt-[80px] -z-10">{children}</div>
+      <div className="mt-[80px] -z-10 min-h-screen">{children}</div>
+
+      <Footer />
     </div>
   );
 }
