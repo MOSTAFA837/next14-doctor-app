@@ -15,7 +15,7 @@ export default async function Layout({
     <div>
       <Navbar session={session} />
 
-      <div className="mx-auto py-3 fixed top-[6rem] border-b border-gray-200 pl-11 mt-[1px] w-full z-50 bg-white">
+      <div className="mx-auto py-3 fixed top-[5rem] border-b border-gray-200 pl-11 w-full bg-white">
         <MegaMenu />
       </div>
 

@@ -5,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 export function Pricing() {
   const plans = [
@@ -19,9 +20,10 @@ export function Pricing() {
         "massa ut pretium maximus",
         "Sed posuere nisi",
       ],
+      getStarted: "/register?role=DOCTOR&plan=free",
     },
     {
-      name: "Startup",
+      name: "Professional",
       desc: "Perfect for small to medium-sized clients.",
       price: 59.9,
       fee: 2,
@@ -33,6 +35,7 @@ export function Pricing() {
         "Pellentesque eu nibh et neque",
         "Suspendisse a leo",
       ],
+      getStarted: "/register?role=DOCTOR&plan=professional",
     },
     {
       name: "Enterprise",
@@ -49,6 +52,7 @@ export function Pricing() {
         "Praesent quis venenatis ipsum",
         "Duis non diam vel tortor",
       ],
+      getStarted: "/register?role=DOCTOR&plan=enterprise",
     },
   ];
 
@@ -109,9 +113,11 @@ export function Pricing() {
                   </TooltipProvider>
                 </div>
 
-                <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700">
-                  Get Started
-                </button>
+                <Link href={item.getStarted} className="mt-8">
+                  <button className="px-3 py-3 rounded-lg mt-8 w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700">
+                    Get Started
+                  </button>
+                </Link>
               </div>
               <ul className="p-8 space-y-3">
                 <li className="pb-2 text-gray-800 font-medium">

@@ -252,7 +252,7 @@ const menuItems = [
 
 export default function MegaMenu() {
   return (
-    <NavigationMenu className="bg-white">
+    <NavigationMenu className="bg-white z-50 pt-3">
       <NavigationMenuList className="space-x-2">
         {menuItems.map((item, i) => {
           return (

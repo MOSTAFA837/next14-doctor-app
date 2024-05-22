@@ -38,7 +38,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
@@ -48,6 +49,7 @@ const callsToAction = [
 export default function Navbar({ session }: { session: Session | null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const user = session?.user;
 
@@ -55,6 +57,37 @@ export default function Navbar({ session }: { session: Session | null }) {
     await signOut();
     router.push("/login");
   }
+
+  const mainNavLinks = [
+    {
+      name: "Home",
+      path: "/",
+    },
+    {
+      name: "Find Doctor",
+      path: "/find-doctor",
+    },
+    {
+      name: "Services",
+      path: "/services",
+    },
+    {
+      name: "Telehealth Visit",
+      path: "/telehealth",
+    },
+    {
+      name: "Inperson Visit",
+      path: "/inperson",
+    },
+    {
+      name: "About",
+      path: "/about",
+    },
+    {
+      name: "Be service provider",
+      path: "/inperson",
+    },
+  ];
 
   return (
     <header className="bg-white fixed top-0 border-b w-screen border-gray-300 z-10">
@@ -68,6 +101,7 @@ export default function Navbar({ session }: { session: Session | null }) {
             <h2 className="text-blue-800 font-bold text-4xl">Doctor</h2>
           </a>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -78,16 +112,22 @@ export default function Navbar({ session }: { session: Session | null }) {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
+
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </a>
+          {mainNavLinks.map((item, i) => (
+            <a
+              key={i}
+              href={item.path}
+              className={cn(
+                "transition-colors hover:text-foreground/80 font-semibold leading-7",
+                pathname === item.path
+                  ? "text-foreground"
+                  : "text-foreground/60"
+              )}
+            >
+              {item.name}
+            </a>
+          ))}
         </Popover.Group>
 
         {user ? (
@@ -233,24 +273,21 @@ export default function Navbar({ session }: { session: Session | null }) {
                     </>
                   )}
                 </Disclosure>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
+                {mainNavLinks.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.path}
+                    // className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-foreground-900 hover:bg-foreground-50"
+                    className={cn(
+                      "transition-colors hover:text-foreground/80 -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7",
+                      pathname === item.path
+                        ? "text-foreground"
+                        : "text-foreground/60"
+                    )}
+                  >
+                    {item.name}
+                  </a>
+                ))}
               </div>
               <div className="py-6">
                 <a

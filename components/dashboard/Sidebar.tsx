@@ -3,6 +3,7 @@
 import {
   Bell,
   Folder,
+  Globe,
   Grid2X2,
   Home,
   LineChart,
@@ -37,6 +38,7 @@ export default function Sidebar() {
     },
     { name: "Reports", path: "/dashboard/reports", icon: LineChart },
     { name: "Settings", path: "/dashboard/settings", icon: Settings },
+    { name: "Online", path: "/dashboard/online", icon: Globe },
     { name: "Logout", path: "/dashboard/logout", icon: Bell },
   ];
 
