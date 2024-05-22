@@ -3,7 +3,7 @@ import SectionHeading from "../../SectionHeading";
 import ToggleButton from "../../ToggleButton";
 import Link from "next/link";
 import DoctorCard from "./DoctorCard";
-import { Map } from "lucide-react";
+import { ArrowUpRight, Map } from "lucide-react";
 import DoctorsListCarousel from "./DoctorsListCarousel";
 
 export default function DoctorsList({
@@ -56,9 +56,10 @@ export default function DoctorsList({
 
           <Link
             href="#"
-            className="py-3 px-6 border border-blue-600 bg-white rounded-lg"
+            className="py-3 px-6 border border-blue-600 bg-white rounded-lg flex items-center gap-2"
           >
             See all
+            <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
 

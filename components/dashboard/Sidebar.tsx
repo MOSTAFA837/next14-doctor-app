@@ -6,11 +6,8 @@ import {
   Grid2X2,
   Home,
   LineChart,
-  Package,
   Package2,
   Settings,
-  ShoppingCart,
-  Users,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -42,6 +39,7 @@ export default function Sidebar() {
     { name: "Settings", path: "/dashboard/settings", icon: Settings },
     { name: "Logout", path: "/dashboard/logout", icon: Bell },
   ];
+
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">

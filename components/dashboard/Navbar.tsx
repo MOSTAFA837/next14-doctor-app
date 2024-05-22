@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import {
@@ -35,11 +34,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 
-export default function Navbar() {
+export default function Navbar({ session }: { session: Session }) {
   const router = useRouter();
+
+  const user = session?.user;
+
   async function handleLogout() {
-    router.push("/");
+    await signOut();
+    router.push("/login");
   }
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
@@ -136,7 +141,7 @@ export default function Navbar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>{user.email?.split("@")[0]}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>

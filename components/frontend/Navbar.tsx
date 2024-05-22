@@ -1,29 +1,60 @@
 "use client";
 
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { useState } from "react";
+import { Dialog, Disclosure, Popover } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
+import { Session } from "next-auth";
+
 import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+  Cloud,
+  CreditCard,
+  Github,
+  Keyboard,
+  LifeBuoy,
+  LogOut,
+  Mail,
+  MessageSquare,
+  Plus,
+  PlusCircle,
+  Settings,
+  User,
+  UserPlus,
+  Users,
+} from "lucide-react";
+
 import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const callsToAction = [
   { name: "Watch demo", href: "#", icon: PlayCircleIcon },
   { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
-export default function Navbar() {
+export default function Navbar({ session }: { session: Session | null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const user = session?.user;
+
+  async function handleLogout() {
+    await signOut();
+    router.push("/login");
+  }
 
   return (
     <header className="bg-white fixed top-0 border-b w-screen border-gray-300 z-10">
@@ -58,14 +89,110 @@ export default function Navbar() {
             Company
           </a>
         </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="/login"
-            className="text-sm font-semibold leading-6 text-gray-50 bg-blue-800 py-3 px-6 rounded-lg"
-          >
-            Log in
-          </a>
-        </div>
+
+        {user ? (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src={
+                      user && user.image
+                        ? user.image
+                        : "https://github.com/shadcn.png"
+                    }
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent className="w-56 mr-8">
+                <DropdownMenuLabel>{user && user.name}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    <span>Billing</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Keyboard className="mr-2 h-4 w-4" />
+                    <span>Keyboard shortcuts</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem>
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Team</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      <span>Invite users</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem>
+                          <Mail className="mr-2 h-4 w-4" />
+                          <span>Email</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          <span>Message</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                          <PlusCircle className="mr-2 h-4 w-4" />
+                          <span>More...</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    <Plus className="mr-2 h-4 w-4" />
+                    <span>New Team</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Github className="mr-2 h-4 w-4" />
+                  <span>GitHub</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LifeBuoy className="mr-2 h-4 w-4" />
+                  <span>Support</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  <Cloud className="mr-2 h-4 w-4" />
+                  <span>API</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => handleLogout()}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a
+              href="/login"
+              className="text-sm font-semibold leading-6 text-gray-50 bg-blue-800 py-3 px-6 rounded-lg"
+            >
+              Log in
+            </a>
+          </div>
+        )}
       </nav>
       <Dialog
         className="lg:hidden"
